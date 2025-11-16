@@ -1,0 +1,22 @@
+[
+    {
+        "name": "TH",
+        "start": "0E00",
+        "end": "0E7F"
+    },
+    {
+        "name": "JP Sym",
+        "start": "3000",
+        "end": "301F"
+    },
+    {
+        "name": "JP Kana",
+        "start": "3040",
+        "end": "30FF"
+    },
+    {
+        "name": "Halfwidth",
+        "start": "FF00",
+        "end": "FFEF"
+    }
+]

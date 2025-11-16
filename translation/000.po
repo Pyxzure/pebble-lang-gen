@@ -1,0 +1,621 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Language: en_US\n"
+"Name: MyLang\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Python\n"
+
+msgid "%A %b %d"
+msgstr "%A %b %d"
+
+msgid "%B %e"
+msgstr "%B %e"
+
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+msgid "%a %b %e %H:%M:%S %Y"
+msgstr "%a %b %e %H:%M:%S %Y"
+
+msgid "%a %b %e %H:%M:%S %Z %Y"
+msgstr "%a %b %e %H:%M:%S %Z %Y"
+
+msgid "%d minute(s)"
+msgstr "%d 분"
+
+msgid "%d%% remaining"
+msgstr "%d%% 남음"
+
+msgid "%lu hours ago"
+msgstr "%lu 시간 전"
+
+msgid "%lu minutes ago"
+msgstr "%lu 분 전"
+
+msgid "%m/%d/%y"
+msgstr "%m/%d/%y"
+
+msgid ""
+"%s crashed!\n"
+"%.20s"
+msgstr ""
+"%s 충돌!\n"
+"%.20s"
+
+msgid "%u Paired Phone%c"
+msgstr "페어링된 폰"
+
+msgid "12h"
+msgstr "12h"
+
+msgid "24h"
+msgstr "24h"
+
+msgid "<Unknown>"
+msgstr "<알 수 없음>"
+
+msgid "A minute ago"
+msgstr "1분 전"
+
+msgid "About"
+msgstr "정보"
+
+msgid "Active"
+msgstr "활성"
+
+msgid "Activity"
+msgstr "액티비티"
+
+msgid "Activity Tracker"
+msgstr "액티비티 트래커"
+
+msgid "Airplane Mode"
+msgstr "비행기 모드"
+
+msgid "Alarm"
+msgstr "알람"
+
+msgid "Alarms"
+msgstr "알람"
+
+msgid "Ambient Controlled"
+msgstr "조도 센서 사용"
+
+msgid "An hour ago"
+msgstr "1시간 전"
+
+msgid "App"
+msgstr "앱"
+
+msgid "Apps Only"
+msgstr "앱만"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "April"
+msgstr "April"
+
+msgid "Aug"
+msgstr "Aug"
+
+msgid "August"
+msgstr "August"
+
+msgid "Auto"
+msgstr "자동"
+
+msgid "BT Address"
+msgstr "BT 주소"
+
+msgid "Backlight"
+msgstr "백라이트"
+
+msgid "Battery Low"
+msgstr "배터리 부족"
+
+msgid "Bluetooth"
+msgstr "블루투스"
+
+msgid "Bluetooth OFF"
+msgstr "블루투스 OFF"
+
+msgid "Bluetooth ON"
+msgstr "블루투스 ON"
+
+msgid "Bootloader"
+msgstr "부트로더"
+
+msgid "Call Ended"
+msgstr "전화 종료"
+
+msgid "Calling..."
+msgstr "전화 거는 중..."
+
+msgid ""
+"Cancel\n"
+"Update?"
+msgstr "업데이트를 취소하시겠습니까?"
+
+msgid "Cancel Update?"
+msgstr "업데이트를 취소하시겠습니까?"
+
+msgid "Canceling Call"
+msgstr "전화 취소"
+
+msgid "Classic Analog"
+msgstr "아날로그"
+
+msgid "Clear History"
+msgstr "히스토리 삭제"
+
+msgid "Clear all notification history?"
+msgstr "알림 목록을 전부 삭제할까요?"
+
+msgid "Connected"
+msgstr "연결됨"
+
+msgid "DOWN"
+msgstr "아래"
+
+msgid "DOWN shortcut disabled"
+msgstr "'아래 바로가기' 비활성화"
+
+msgid "DOWN shortcut set"
+msgstr "'아래 바로가기' 설정"
+
+msgid "Date & Time"
+msgstr "날짜 & 시간"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "Dec"
+msgstr "Dec"
+
+msgid "December"
+msgstr "December"
+
+msgid "Declining Call"
+msgstr "전화 거절"
+
+msgid "Delete"
+msgstr "삭제"
+
+msgid "Disable"
+msgstr "비활성화"
+
+msgid "Disable Airplane Mode to connect"
+msgstr "연결을 위해 비행기 모드 해제"
+
+msgid "Disabled"
+msgstr "비활성"
+
+msgid "Disabled (Plugged In)"
+msgstr "비활성화됨 (플러그인)"
+
+msgid "Disabling..."
+msgstr "비활성화중..."
+
+msgid "Disconnected"
+msgstr "연결 끊김"
+
+msgid "Display"
+msgstr "화면"
+
+msgid "Do Not Disturb"
+msgstr "방해 금지"
+
+msgid "Down Button"
+msgstr "아래 버튼"
+
+msgid "Edit"
+msgstr "편집"
+
+msgid "Edit Alarm"
+msgstr "알람 편집"
+
+msgid "Enable"
+msgstr "활성화"
+
+msgid "Enabled"
+msgstr "활성"
+
+msgid "Enabling..."
+msgstr "활성화중..."
+
+msgid "Factory Reset"
+msgstr "공장 초기화"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "February"
+msgstr "February"
+
+msgid "Firmware"
+msgstr "펌웨어"
+
+msgid "Firmware Update"
+msgstr "펌웨어 업데이트"
+
+msgid "Font Size"
+msgstr "폰트 사이즈"
+
+msgid "Forget"
+msgstr "지우기"
+
+msgid "Fri"
+msgstr "Fri"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Getting Started"
+msgstr "시작하기"
+
+msgid "Golf"
+msgstr "골프"
+
+msgid "Hardware"
+msgstr "하드웨어"
+
+msgid "Hole"
+msgstr "홀"
+
+msgid "Incoming Call"
+msgstr "전화 수신 중"
+
+msgid "Install Pebble App"
+msgstr "페블 앱 설치"
+
+msgid "Jan"
+msgstr "Jan"
+
+msgid "January"
+msgstr "January"
+
+msgid "Jul"
+msgstr "Jul"
+
+msgid "July"
+msgstr "July"
+
+msgid "Jun"
+msgstr "Jun"
+
+msgid "June"
+msgstr "June"
+
+msgid "Just now"
+msgstr "방금"
+
+msgid "LE Only"
+msgstr "LE Only"
+
+msgid "Language"
+msgstr "언어"
+
+msgid "Large"
+msgstr "Large"
+
+msgid "Last Warning"
+msgstr "마지막 경고"
+
+msgid "Legal"
+msgstr "Legal"
+
+msgid "Long press %s from any watchface to open %s"
+msgstr "%s 를 열기위해 아무 시계 화면에서 %s 를 길게 눌러주세요."
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "March"
+msgstr "March"
+
+msgid "May"
+msgstr "May"
+
+msgid "Missed Call"
+msgstr "부재중 전화"
+
+msgid "Mon"
+msgstr "Mon"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Month"
+msgstr "Month"
+
+msgid "Motion"
+msgstr "모션센서"
+
+msgid "Music"
+msgstr "음악"
+
+msgid "New Alarm"
+msgstr "새로운 알람"
+
+msgid "No Activity Trackers are installed"
+msgstr "액티비티 트래커가 설치되어 있지 않습니다"
+
+msgid "No Caller ID"
+msgstr "발신자 정보 없음"
+
+msgid "No LE"
+msgstr "LE 없음"
+
+msgid "No Music Found"
+msgstr "발견된 음악이 없습니다"
+
+msgid "No Phone Connection"
+msgstr "연결된 폰이 없습니다"
+
+msgid "No notifications."
+msgstr "알림 없음."
+
+msgid "Notifications"
+msgstr "알림"
+
+msgid "Notifications Off"
+msgstr "알림 끔"
+
+msgid "Notifications On"
+msgstr "알림 켬"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "November"
+msgstr "November"
+
+msgid "Now Discoverable"
+msgstr "검색 가능"
+
+msgid "OFF"
+msgstr "OFF"
+
+msgid "ON"
+msgstr "ON"
+
+msgid "Oct"
+msgstr "Oct"
+
+msgid "October"
+msgstr "October"
+
+msgid "Off"
+msgstr "Off"
+
+msgid "Open the Pebble app on your phone to connect"
+msgstr "연결을 위해 스마트폰의 페블 앱을 열어 주세요"
+
+msgid "Options"
+msgstr "옵션"
+
+msgid "PACE"
+msgstr "PACE"
+
+msgid "Pair with %s?"
+msgstr "%s 와 연결하시겠습니까?"
+
+msgid "Pairing Instructions"
+msgstr "페어링 방법"
+
+msgid "Panic App"
+msgstr "Panic App"
+
+msgid "Par"
+msgstr "Par"
+
+msgid "Phone Calls Only"
+msgstr "전화만 알림"
+
+msgid "Press any button"
+msgstr "아무 버튼이나 눌러주세요"
+
+msgid "Quick Launch"
+msgstr "빠른 실행"
+
+msgid "Ready for Update"
+msgstr "업데이트 준비 완료"
+
+msgid "Recovery"
+msgstr "리커버리"
+
+msgid ""
+"Remember to also forget your Pebble's Bluetooth connection from your mobile "
+"device"
+msgstr ""
+"Remember to also forget your Pebble's Bluetooth connection from your mobile "
+"device"
+
+msgid ""
+"Remember to also forget your Pebble's Bluetooth connection from your phone"
+msgstr ""
+"Remember to also forget your Pebble's Bluetooth connection from your phone"
+
+msgid "Reset to factory settings?"
+msgstr "공장 초기화 하시겠습니까?"
+
+msgid "Resetting..."
+msgstr "초기화 중..."
+
+msgid "Ringing..."
+msgstr "전화 중..."
+
+msgid "SPEED"
+msgstr "SPEED"
+
+msgid "Sat"
+msgstr "Sat"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Select an App"
+msgstr "앱 선택"
+
+msgid "Selected"
+msgstr "선택됨"
+
+msgid "Sep"
+msgstr "Sep"
+
+msgid "September"
+msgstr "September"
+
+msgid "Serial"
+msgstr "시리얼"
+
+msgid "Set App"
+msgstr "앱 설정"
+
+msgid "Set Date"
+msgstr "날짜 설정"
+
+msgid "Set Now"
+msgstr "지금 설정"
+
+msgid "Set Schedule"
+msgstr "스케줄 설정"
+
+msgid "Set Time"
+msgstr "시간 설정"
+
+msgid "Settings"
+msgstr "설정"
+
+msgid "Shake to light"
+msgstr "흔들어서 켜기"
+
+msgid "Shortcut not set"
+msgstr "단축키 미설정"
+
+msgid "Shut Down"
+msgstr "전원 끄기"
+
+msgid "Simplicity"
+msgstr "심플"
+
+msgid "Small"
+msgstr "Small"
+
+msgid "Snooze Delay"
+msgstr "Snooze Delay"
+
+msgid "Sports"
+msgstr "Sports"
+
+msgid "Sun"
+msgstr "Sun"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Texts Only"
+msgstr "문자 수신만"
+
+msgid "This shortcut can be enabled from the settings menu"
+msgstr "바로가기는 설정 메뉴에서 활성화할 수 있습니다"
+
+msgid "Thu"
+msgstr "Thu"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Time Display"
+msgstr "시간 표시"
+
+msgid "Tue"
+msgstr "Tue"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "UP"
+msgstr "위"
+
+msgid "UP shortcut disabled"
+msgstr "'위 바로가기' 비활성화"
+
+msgid "UP shortcut set"
+msgstr "'위 바로가기' 설정"
+
+msgid "Unknown"
+msgstr "알 수 없음"
+
+msgid "Up Button"
+msgstr "위 버튼"
+
+msgid "Updating..."
+msgstr "업데이트 중..."
+
+msgid "Uptime"
+msgstr "사용 시간"
+
+msgid "Use %s instead of %s for activity tracking?"
+msgstr "Use %s instead of %s for activity tracking?"
+
+msgid "Vibration"
+msgstr "진동"
+
+msgid "Watchfaces"
+msgstr "시계 화면"
+
+msgid "Wed"
+msgstr "Wed"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Welcome UI"
+msgstr "Welcome UI"
+
+msgid "Welcome!"
+msgstr "환영합니다!"
+
+msgid "Worker"
+msgstr "Worker"
+
+msgid "Would you like to set the DOWN shortcut?"
+msgstr "'아래 바로가기' 를 설정하시겠습니까?"
+
+msgid "Would you like to set the UP shortcut?"
+msgstr "'위 바로가기' 를 설정하시겠습니까?"
+
+msgid "Year"
+msgstr "Year"
+
+msgid "You just updated your Pebble to version %s!"
+msgstr "당신의 Pebble이 %s 버전으로 업데이트 되었습니다!"
+
+msgid "Your Pebble is up to date!"
+msgstr "당신의 Pebble이 %s 버전으로 업데이트 되었습니다!"
+
+msgid "km"
+msgstr "km"
+
+msgid "km/h"
+msgstr "km/h"
+
+msgid "md"
+msgstr "md"
+
+msgid "mi"
+msgstr "mi"
+
+msgid "mi/h"
+msgstr "mi/h"
+
+msgid "min/km"
+msgstr "min/km"
+
+msgid "min/mi"
+msgstr "min/mi"
