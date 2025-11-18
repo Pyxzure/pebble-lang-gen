@@ -2,21 +2,25 @@
     {
         "name": "TH",
         "start": "0E00",
-        "end": "0E7F"
+        "end": "0E7F",
+        "font": "GoNotoKurrent-Regular.ttf"
     },
     {
         "name": "JP Sym",
         "start": "3000",
-        "end": "301F"
+        "end": "301F",
+        "font": "GoNotoKurrent-Regular.ttf"
     },
     {
         "name": "JP Kana",
         "start": "3040",
-        "end": "30FF"
+        "end": "30FF",
+        "font": "GoNotoKurrent-Regular.ttf"
     },
     {
         "name": "Halfwidth",
         "start": "FF00",
-        "end": "FFEF"
+        "end": "FFEF",
+        "font": "GoNotoKurrent-Regular.ttf"
     }
 ]

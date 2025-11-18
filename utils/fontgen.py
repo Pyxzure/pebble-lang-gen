@@ -1,4 +1,4 @@
-#https://gist.github.com/medicalwei/c9fdcd9ec19b0c363ec1
+# Source: https://gist.github.com/medicalwei/c9fdcd9ec19b0c363ec1
 
 import argparse
 import freetype
@@ -52,9 +52,10 @@ class Font:
         self.ttf_path = ttf_path
         self.max_height = int(height)
         self.legacy = legacy
-        self.face = freetype.Face(self.ttf_path)
-        self.face.set_pixel_sizes(0, self.max_height)
-        self.name = self.face.family_name + b'_' + self.face.style_name
+        if self.ttf_path != '':
+            self.face = freetype.Face(self.ttf_path)
+            self.face.set_pixel_sizes(0, self.max_height)
+            self.name = self.face.family_name + b'_' + self.face.style_name
         self.wildcard_codepoint = WILDCARD_CODEPOINT
         self.number_of_glyphs = 0
         self.table_size = HASH_TABLE_SIZE

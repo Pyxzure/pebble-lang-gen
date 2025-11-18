@@ -1,4 +1,5 @@
 #https://scriptin.github.io/kanji-frequency/
+#font:GoNotoKurrent-Regular.ttf
 人
 一
 見
