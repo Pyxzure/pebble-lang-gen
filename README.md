@@ -28,6 +28,8 @@ The final language pack will be output to `build/langpack.pbl`. Example includes
 
 ### 4. Upload this file to the watch via the app
 
+Optionally, you can [preview](font_preview.md) the generated font files in Pebble SDK's emulator before sending the generated Language Pack to your phone and watch.
+
 ## References
 - Noto Universal font -- https://github.com/satbyy/go-noto-universal
 - `fontgen.py` -- https://gist.github.com/medicalwei/c9fdcd9ec19b0c363ec1
