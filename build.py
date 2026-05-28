@@ -265,13 +265,13 @@ builds = {
     '008': (28, '28_bold'),
 }
 
-for variant, value in builds.items():
+for key, values in builds.items():
     fonts = build_font_objects(
         json_paths=json_paths,
         fonts_metadata=fonts_metadata,
-        variant=variant,
-        vert_size=value[0],
-        pbff_type=value[1]
+        variant=key,
+        vert_size=values[0],
+        pbff_type=values[1]
     )
     if not fonts:
         raise Exception("Failed to create any Font objects. Exiting.")
@@ -280,7 +280,7 @@ for variant, value in builds.items():
     if merged_font is None:
         raise Exception("Failed to merge fonts. Exiting.")
     
-    with open(BUILD_DIR / variant, 'wb') as f:
+    with open(BUILD_DIR / key, 'wb') as f:
         f.write(merged_font.bitstring())
 
 for file_name in [str(i).zfill(3) for i in range(9, 19)]:
