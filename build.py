@@ -38,6 +38,12 @@ def build_font_objects(json_paths, fonts_metadata, variant, vert_size, pbff_type
             elif 'pbff' in variant_details:
                 font_type = FontType.PBFF
                 pbff_path = str(PBFFS_DIR / variant_details['pbff'] / f"{pbff_type}.pbff")
+
+            if ttf_path == "" and pbff_path == "":
+                raise KeyError(f'Font spec for the variant {variant} for the font {font_name} must have "ttf" or "pbff" specified.')
+            if ttf_path != "" and pbff_path != "":
+                raise KeyError(f'Font spec for the variant {variant} for the font {font_name} must have either "ttf" or "pbff", not both.')
+
             font_height = variant_details['height']
             font_offset = variant_details.get('offset') or 0
 
