@@ -7,6 +7,7 @@ from typing import Dict, List
 from utils.fontgen import Font, FontType
 import utils.fontgen as fg
 from utils.pbpack import ResourcePack
+import logging
 
 LANG_DIR = Path('./lang/')
 TTFS_DIR = Path('./ttf/')
@@ -19,7 +20,7 @@ USE_LEGACY = False
 
 os.makedirs(BUILD_DIR, exist_ok=True)
 
-def build_font_objects(json_paths, fonts_metadata, variant, pbff_type) -> List[Font]:
+def build_font_objects(json_paths, fonts_metadata, variant, vert_size, pbff_type) -> List[Font]:
     font_objects = []
     
     for json_path in json_paths:
@@ -38,13 +39,20 @@ def build_font_objects(json_paths, fonts_metadata, variant, pbff_type) -> List[F
                 font_type = FontType.PBFF
                 pbff_path = str(PBFFS_DIR / variant_details['pbff'] / f"{pbff_type}.pbff")
             font_height = variant_details['height']
-            font_offset = variant_details.get('offset')
+            font_offset = variant_details.get('offset') or 0
+
+            if font_height + font_offset != vert_size and font_height <= vert_size:
+                new_font_offset = vert_size - font_height
+                logging.warning(f"Offset value {font_offset} for the variant {variant} for the font {font_name} is inappropriate. Automatically set to {new_font_offset}.")
+                font_offset = new_font_offset
+            
+            if vert_size < font_height:
+                raise Exception(f"Height value {font_height} for the variant {variant} for the font {font_name} is too big. Try smaller number than {vert_size}.")
 
             max_glyphs = 32640 if USE_EXTENDED else 256
             font_obj = Font(font_type, ttf_path, pbff_path, font_height, max_glyphs, USE_LEGACY)
             font_obj.set_codepoint_list(json_path)
-            if font_offset is not None:
-                font_obj.set_heightoffset(font_offset)
+            font_obj.set_heightoffset(font_offset)
             
             font_objects.append(font_obj)
     
@@ -240,23 +248,24 @@ with open(fonts_path, 'r', encoding='utf-8') as f:
 print("Building resource")
 
 builds = {
-    # pebble font resource key: (ttf font height, ttf height offset, pbff file name)
-    '001': '14',
-    '002': '14_bold',
-    '003': '18',
-    '004': '18_bold',
-    '005': '24',
-    '006': '24_bold',
-    '007': '28',
-    '008': '28_bold',
+    # pebble font resource key: (required ttf font height + offset(vertical size), pbff file name)
+    '001': (14, '14'),
+    '002': (14, '14_bold'),
+    '003': (18, '18'),
+    '004': (18, '18_bold'),
+    '005': (24, '24'),
+    '006': (24, '24_bold'),
+    '007': (28, '28'),
+    '008': (28, '28_bold'),
 }
 
-for variant, pbff_type in builds.items():
+for variant, value in builds.items():
     fonts = build_font_objects(
         json_paths=json_paths,
         fonts_metadata=fonts_metadata,
         variant=variant,
-        pbff_type=pbff_type
+        vert_size=value[0],
+        pbff_type=value[1]
     )
     if not fonts:
         raise Exception("Failed to create any Font objects. Exiting.")
