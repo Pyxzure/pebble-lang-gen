@@ -8,9 +8,18 @@ Python utility to help create a custom language pack file for the Pebble watch (
 
 The script will perform 2 scans. Edit the files in the `lang/` directory to configure the character set to import. Place the TTF font files to build from into the `ttf/` directory. Place the PBFF font files to build from into the `pbff/` directory.
 
-1.1 (Easy way) If the character set you want to add is small, locate the Unicode block of the character set you wish to add and edit the `lang/unicodes.json` by following the existing template. Remove any default character set you do not need. The `name` property is only for reference. The `start` and `end` properties are the start and end address in Base 16 of the Unicode character range to be imported. Specify the font file to import from with the `ttf` (full name, like `example.ttf`) or `pbff` (only folder name, like `renaissance`) property. Leave an empty array if you do not use this file.
+Edit the `lang/fonts.json` by following the existing template to provide data about the font(s) you want to use. The `name` property in this file is used to refer to the font to use in character list files. Specify the font file to import from with the `ttf` (full name, like `example.ttf`) or `pbff` (only folder name, like `renaissance`) property inside each `variants`. Specify the font height and offset for each `variants`. Each variants should have the following `height + offset` value:
 
-1.2 If the character set you want to add would be too large to import in full, identify the subset of those characters that you want to import and input them into text files. The script will scan the `lang/` directory for all `*.txt` files and import every characters that appear. Lines that start with `#` are ignored. The characters can be a long continuous string or separated by new-lines. Specify the font file to import from with a `#ttf:` (full name, like `example.ttf`) or `#pbff:` (only folder name, like `renaissance`) comment, which must precede the first non-comment line. The provided `lang/kanji.txt` is an example of the 3000 most used Kanji based on `scriptin/aozora` dataset.
+`variants` | `height + offset`
+---------|--------------
+`001` (regular), `002` (bold) | 14
+`003` (regular), `004` (bold) | 18
+`005` (regular), `006` (bold) | 24
+`007` (regular), `008` (bold) | 28
+
+1.1 (Easy way) If the character set you want to add is small, locate the Unicode block of the character set you wish to add and edit the `lang/unicodes.json` by following the existing template. Remove any default character set you do not need. The `name` property is only for reference. The `start` and `end` properties are the start and end address in Base 16 of the Unicode character range to be imported. Specify the font to use with the `font` property (this is the `name` property in the `lang/fonts.json` file). Leave an empty array if you do not use this file.
+
+1.2 If the character set you want to add would be too large to import in full, identify the subset of those characters that you want to import and input them into text files. The script will scan the `lang/` directory for all `*.txt` files and import every characters that appear. Lines that start with `#` are ignored. The characters can be a long continuous string or separated by new-lines. Specify the font to use with a `#font:` comment (this is the `name` property in the `lang/fonts.json` file), which must precede the first non-comment line. The provided `lang/kanji.txt` is an example of the 3000 most used Kanji based on `scriptin/aozora` dataset.
 
 ### 2. Modify the meta data and provide interface translation (optional)
 
