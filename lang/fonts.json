@@ -1,0 +1,56 @@
+[
+    {
+        "name": "GoNotoKurrent",
+        "variants":
+        {
+            "001": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 12,
+                "offset": 2
+            },
+            "002": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 12,
+                "offset": 2
+            },
+            "003": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 14,
+                "offset": 4
+            },
+            "004": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 14,
+                "offset": 4
+            },
+            "005": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 17,
+                "offset": 7
+            },
+            "006": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 17,
+                "offset": 7
+            },
+            "007": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 20,
+                "offset": 8
+            },
+            "008": 
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 20,
+                "offset": 8
+            }
+        }
+    }
+]

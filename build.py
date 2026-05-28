@@ -19,27 +19,34 @@ USE_LEGACY = False
 
 os.makedirs(BUILD_DIR, exist_ok=True)
 
-def build_font_objects(json_paths, font_height, font_offset, pbff_type) -> List[Font]:
+def build_font_objects(json_paths, fonts_metadata, variant, pbff_type) -> List[Font]:
     font_objects = []
     
     for json_path in json_paths:
-        font_or_pbff_name: str = json_path.name.replace(".json", "")
-        ttf_path = ""
-        pbff_path = ""
-        if '.ttf' in font_or_pbff_name:
-            font_type = FontType.TTF
-            ttf_path = str(TTFS_DIR / font_or_pbff_name)
-        elif '.pbff' in font_or_pbff_name:
-            font_type = FontType.PBFF
-            pbff_path = str(PBFFS_DIR.joinpath(font_or_pbff_name.replace(".pbff", "")).joinpath(f"{pbff_type}.pbff"))
+        with open(json_path, 'r', encoding='utf-8') as f:
+            output_spec = json.load(f)
+            font_name = output_spec['font']
+            font_metadata = fonts_metadata[font_name]
+            variant_details = font_metadata[variant]
 
-        max_glyphs = 32640 if USE_EXTENDED else 256
-        font_obj = Font(font_type, ttf_path, pbff_path, font_height, max_glyphs, USE_LEGACY)
-        font_obj.set_codepoint_list(json_path)
-        if font_offset is not None:
-            font_obj.set_heightoffset(font_offset)
-        
-        font_objects.append(font_obj)
+            ttf_path = ""
+            pbff_path = ""
+            if 'ttf' in variant_details:
+                font_type = FontType.TTF
+                ttf_path = str(TTFS_DIR / variant_details['ttf'])
+            elif 'pbff' in variant_details:
+                font_type = FontType.PBFF
+                pbff_path = str(PBFFS_DIR / variant_details['pbff'] / f"{pbff_type}.pbff")
+            font_height = variant_details['height']
+            font_offset = variant_details.get('offset')
+
+            max_glyphs = 32640 if USE_EXTENDED else 256
+            font_obj = Font(font_type, ttf_path, pbff_path, font_height, max_glyphs, USE_LEGACY)
+            font_obj.set_codepoint_list(json_path)
+            if font_offset is not None:
+                font_obj.set_heightoffset(font_offset)
+            
+            font_objects.append(font_obj)
     
     return font_objects
 
@@ -143,8 +150,7 @@ def merge_fonts(fonts: List[Font]) -> Font:
         build_hash_table(merged, hash_bucket_sizes)
         return merged
 
-glyph_map_ttf = {}
-glyph_map_pbff = {}
+glyph_map_font: Dict[int, str] = {}
 
 # Build codepoint -> font map
 
@@ -154,23 +160,18 @@ print("Building codepoint list")
 for filename in os.listdir(LANG_DIR):
     if filename.endswith('.txt'):
         with open(LANG_DIR/filename, 'r', encoding='utf-8') as f:
-            ttf_name = None
-            pbff_name = None
+            font_name = None
             for line in f:
                 line = line.strip()
                 if line.startswith('#') or line == '':
-                    if line.startswith('#ttf:'):
-                        ttf_name = line.split(':', 1)[1].strip()
-                    if line.startswith('#pbff:'):
-                        pbff_name = line.split(':', 1)[1].strip()
+                    if line.startswith('#font:'):
+                        font_name = line.split(':', 1)[1].strip()
                     continue
-                if ttf_name is None and pbff_name is None:
+                if font_name is None:
                     raise Exception('Font file not specified in ' + filename)
                 for ch in line:
-                    if ttf_name:
-                        glyph_map_ttf[ord(ch)] = ttf_name
-                    if pbff_name:
-                        glyph_map_pbff[ord(ch)] = pbff_name
+                    if font_name:
+                        glyph_map_font[ord(ch)] = font_name
 
 # Read './lang/unicodes.json'
 unicodes_path = LANG_DIR/'unicodes.json'
@@ -180,62 +181,59 @@ with open(unicodes_path, 'r', encoding='utf-8') as f:
 for spec in unicode_specs:
     start_cp = int(spec['start'], 16)
     end_cp = int(spec['end'], 16)
-    ttf_name = spec.get('ttf')
-    pbff_name = spec.get('pbff')
-    if ttf_name is None and pbff_name is None:
-        raise KeyError(f'unicode spec with name {spec.get('name')} must have "font" or "pbff" specified')
-    if ttf_name != None and pbff_name != None:
-        raise KeyError(f'unicode spec with name {spec.get('name')} must have either "font" or "pbff", not both')
+    font_name = spec.get('font')
+    if font_name is None:
+        raise KeyError(f'unicode spec with name {spec.get('name')} must have "font" specified')
 
     for cp in range(start_cp, end_cp + 1):
-        if ttf_name:
-            glyph_map_ttf[cp] = ttf_name
-        if pbff_name:
-            glyph_map_pbff[cp] = pbff_name
+        if font_name:
+            glyph_map_font[cp] = font_name
 
-glyph_inv_ttf = {}
-glyph_inv_pbff = {}
+glyph_inv_font: Dict[str, List[int]] = {}
 
 # Build the inverse mappings
-for glyph_map, glyph_inv in [(glyph_map_ttf, glyph_inv_ttf), (glyph_map_pbff, glyph_inv_pbff)]:
-    for key, value in glyph_map.items():
-        if value not in glyph_inv:
-            glyph_inv[value] = []
-        glyph_inv[value].append(key)
+for key, value in glyph_map_font.items():
+    if value not in glyph_inv_font:
+        glyph_inv_font[value] = []
+    glyph_inv_font[value].append(key)
 
 json_paths = []
 
 # Build font -> codepoint map
-for glyph_inv, font_type in [(glyph_inv_ttf, FontType.TTF), (glyph_inv_pbff, FontType.PBFF)]:
-    for ttf_name, codepoints in glyph_inv.items():
-        # Sort codepoints for consistent output
-        sorted_codepoints = sorted(list(codepoints))
+for font_name in glyph_inv_font:
+    codepoints = glyph_inv_font[font_name]
+    # Sort codepoints for consistent output
+    sorted_codepoints = sorted(list(codepoints))
 
-        # Convert codepoints to characters
-        characters = []
-        for codepoint in sorted_codepoints:
-            char = chr(codepoint)
-            characters.append(char)
+    # Convert codepoints to characters
+    characters = []
+    for codepoint in sorted_codepoints:
+        char = chr(codepoint)
+        characters.append(char)
 
-        output_data = {
-            "font": ttf_name,
-            "count": len(sorted_codepoints),
-            "chars": ''.join(characters),
-            "codepoints": sorted_codepoints
-        }
+    output_data = {
+        "font": font_name,
+        "count": len(sorted_codepoints),
+        "chars": ''.join(characters),
+        "codepoints": sorted_codepoints
+    }
 
-        if font_type == FontType.TTF:
-            output_path = BUILD_DIR / f"{ttf_name}.json"
-        else:  # PBFF
-            output_path = BUILD_DIR / f"{ttf_name}.pbff.json"
+    output_path = BUILD_DIR / f"{font_name}.json"
 
-        with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(output_data, f, indent=2, ensure_ascii=False)
-        json_paths.append(output_path)
-        print(f"Saved: {output_path}")
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(output_data, f, indent=2, ensure_ascii=False)
+    json_paths.append(output_path)
+    print(f"Saved: {output_path}")
 
 if len(json_paths) < 1:
     raise Exception("No JSON files found. Exiting.")
+
+# Read './lang/fonts.json'
+fonts_path = LANG_DIR / 'fonts.json'
+fonts_metadata = {}
+with open(fonts_path, 'r', encoding='utf-8') as f:
+    fonts_specs = json.load(f)
+    fonts_metadata = dict([(font_spec['name'], font_spec['variants']) for font_spec in fonts_specs])
 
 # Build the character set
 
@@ -243,22 +241,22 @@ print("Building resource")
 
 builds = {
     # pebble font resource key: (ttf font height, ttf height offset, pbff file name)
-    '001': (12, 2, '14'),
-    '002': (12, 2, '14_bold'),
-    '003': (14, 4, '18'),
-    '004': (14, 4, '18_bold'),
-    '005': (17, 7, '24'),
-    '006': (17, 7, '24_bold'),
-    '007': (20, 8, '28'),
-    '008': (20, 8, '28_bold'),
+    '001': '14',
+    '002': '14_bold',
+    '003': '18',
+    '004': '18_bold',
+    '005': '24',
+    '006': '24_bold',
+    '007': '28',
+    '008': '28_bold',
 }
 
-for key, values in builds.items():
+for variant, pbff_type in builds.items():
     fonts = build_font_objects(
-        json_paths,
-        font_height=values[0],
-        font_offset=values[1],
-        pbff_type=values[2],
+        json_paths=json_paths,
+        fonts_metadata=fonts_metadata,
+        variant=variant,
+        pbff_type=pbff_type
     )
     if not fonts:
         raise Exception("Failed to create any Font objects. Exiting.")
@@ -267,7 +265,7 @@ for key, values in builds.items():
     if merged_font is None:
         raise Exception("Failed to merge fonts. Exiting.")
     
-    with open(BUILD_DIR / key, 'wb') as f:
+    with open(BUILD_DIR / variant, 'wb') as f:
         f.write(merged_font.bitstring())
 
 for file_name in [str(i).zfill(3) for i in range(9, 19)]:
