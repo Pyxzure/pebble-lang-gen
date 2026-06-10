@@ -28,6 +28,8 @@ def build_font_objects(json_paths, fonts_metadata, variant, vert_size, pbff_type
             output_spec = json.load(f)
             font_name = output_spec['font']
             font_metadata = fonts_metadata[font_name]
+            if variant not in font_metadata:
+                continue
             variant_details = font_metadata[variant]
 
             ttf_path = ""
@@ -36,8 +38,12 @@ def build_font_objects(json_paths, fonts_metadata, variant, vert_size, pbff_type
                 font_type = FontType.TTF
                 ttf_path = str(TTFS_DIR / variant_details['ttf'])
             elif 'pbff' in variant_details:
+                if pbff_type is None:
+                    continue
                 font_type = FontType.PBFF
                 pbff_path = str(PBFFS_DIR / variant_details['pbff'] / f"{pbff_type}.pbff")
+            else: 
+                continue
 
             if ttf_path == "" and pbff_path == "":
                 raise KeyError(f'Font spec for the variant {variant} for the font {font_name} must have "ttf" or "pbff" specified.')
@@ -59,6 +65,8 @@ def build_font_objects(json_paths, fonts_metadata, variant, vert_size, pbff_type
             font_obj = Font(font_type, ttf_path, pbff_path, font_height, max_glyphs, USE_LEGACY)
             font_obj.set_codepoint_list(json_path)
             font_obj.set_heightoffset(font_offset)
+            if font_type == FontType.TTF:
+                font_obj.set_fauxbold(variant_details.get('bold', False))
             
             font_objects.append(font_obj)
     
@@ -197,7 +205,7 @@ for spec in unicode_specs:
     end_cp = int(spec['end'], 16)
     font_name = spec.get('font')
     if font_name is None:
-        raise KeyError(f'unicode spec with name {spec.get('name')} must have "font" specified')
+        raise KeyError(f'unicode spec with name {spec.get("name")} must have "font" specified')
 
     for cp in range(start_cp, end_cp + 1):
         if font_name:
@@ -254,7 +262,7 @@ with open(fonts_path, 'r', encoding='utf-8') as f:
 print("Building resource")
 
 builds = {
-    # pebble font resource key: (required ttf font height + offset(vertical size), pbff file name)
+    # pebble font resource key: (required font height + offset(vertical size), pbff file name)
     '001': (14, '14'),
     '002': (14, '14_bold'),
     '003': (18, '18'),
@@ -263,6 +271,16 @@ builds = {
     '006': (24, '24_bold'),
     '007': (28, '28'),
     '008': (28, '28_bold'),
+    '009': (18, None),
+    '010': (30, None),
+    '011': (34, None),
+    '012': (34, None),
+    '013': (42, None),
+    '014': (42, None),
+    '015': (42, None),
+    '016': (21, None),
+    '017': (49, None),
+    '018': (28, None),
 }
 
 for key, values in builds.items():
@@ -274,7 +292,9 @@ for key, values in builds.items():
         pbff_type=values[1]
     )
     if not fonts:
-        raise Exception("Failed to create any Font objects. Exiting.")
+        with open(BUILD_DIR / key, 'wb') as f:
+            pass
+        continue
         
     merged_font = merge_fonts(fonts)
     if merged_font is None:
@@ -283,9 +303,11 @@ for key, values in builds.items():
     with open(BUILD_DIR / key, 'wb') as f:
         f.write(merged_font.bitstring())
 
-for file_name in [str(i).zfill(3) for i in range(9, 19)]:
-    with open(BUILD_DIR / file_name, 'w') as f:
-        pass  # Empty file
+for file_name in [str(i).zfill(3) for i in range(1, 19)]:
+    output_path = BUILD_DIR / file_name
+    if not output_path.exists():
+        with open(output_path, 'wb') as f:
+            pass
 
 shutil.copy(TRANS_DIR / '000', BUILD_DIR / '000')
 
@@ -294,8 +316,34 @@ print("Packing resources")
 # Pack all files
 pack = ResourcePack()
 for f in [str(i).zfill(3) for i in range(0, 19)]:
-    pack.add_resource(open(BUILD_DIR / f, 'rb').read())
+    with open(BUILD_DIR / f, 'rb') as resource_file:
+        content = resource_file.read()
+    if f == '018' and len(content) != 0 and content in pack.contents:   # workaround; last resource must not be duplicate
+        pack.contents.append(content)
+        pack.table.append(len(pack.contents) - 1)
+    else:
+        pack.add_resource(content)
 with open(BUILD_DIR / OUTPUT_FILE, 'wb') as pack_file:
     pack.serialize(pack_file)
 
 print("Completed. Output: " + str(BUILD_DIR / OUTPUT_FILE))
+
+# NOTE
+# 001	GOTHIC_14_EXTENDED
+# 002	GOTHIC_14_BOLD_EXTENDED
+# 003	GOTHIC_18_EXTENDED
+# 004	GOTHIC_18_BOLD_EXTENDED
+# 005	GOTHIC_24_EXTENDED
+# 006	GOTHIC_24_BOLD_EXTENDED
+# 007	GOTHIC_28_EXTENDED
+# 008	GOTHIC_28_BOLD_EXTENDED
+# 009	BITHAM_18_LIGHT_SUBSET_EXTENDED
+# 010	BITHAM_30_BLACK_EXTENDED
+# 011	BITHAM_34_LIGHT_SUBSET_EXTENDED
+# 012	BITHAM_34_MEDIUM_NUMBERS_EXTENDED
+# 013	BITHAM_42_BOLD_EXTENDED
+# 014	BITHAM_42_LIGHT_EXTENDED
+# 015	BITHAM_42_MEDIUM_NUMBERS_EXTENDED
+# 016	ROBOTO_CONDENSED_21_EXTENDED
+# 017	ROBOTO_BOLD_SUBSET_49_EXTENDED
+# 018	DROID_SERIF_28_BOLD_EXTENDED

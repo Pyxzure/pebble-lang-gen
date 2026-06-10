@@ -8,14 +8,30 @@ Python utility to help create a custom language pack file for the Pebble watch (
 
 The script will perform 2 scans. Edit the files in the `lang/` directory to configure the character set to import. Place the TTF font files to build from into the `ttf/` directory. Place the PBFF font files to build from into the `pbff/` directory.
 
-Edit the `lang/fonts.json` by following the existing template to provide data about the font(s) you want to use. The `name` property in this file is used to refer to the font to use in character list files. Specify the font file to import from with the `ttf` (full name, like `example.ttf`) or `pbff` (only folder name, like `renaissance`) property inside each `variants`. Specify the font height and offset for each `variants`. Each variants should have the following `height + offset` value:
+Edit the `lang/fonts.json` by following the existing template to provide data about the font(s) you want to use. The `name` property in this file is used to refer to the font to use in character list files. Specify the font file to import from with the `ttf` (full name, like `example.ttf`) or `pbff` (only folder name, like `renaissance`) property inside each `variants`. Specify the font `height`, `offset`, and `bold` for each `variants`. `offset` is used to adjust for fonts that do not align properly to English character baseline. Each variants should have the following `height + offset` value:
 
-`variants` | `height + offset`
+variants | height + offset
 ---------|--------------
-`001` (regular), `002` (bold) | 14
-`003` (regular), `004` (bold) | 18
-`005` (regular), `006` (bold) | 24
-`007` (regular), `008` (bold) | 28
+001|14
+002|14
+003|18
+004|18
+005|24
+006|24
+007|28
+008|28
+009|18
+010|30
+011|34
+012|34
+013|42
+014|42
+015|42
+016|21
+017|49
+018|28
+
+Unused variants (typically 009~018) can be deleted to reduce final pack size.
 
 1.1 (Easy way) If the character set you want to add is small, locate the Unicode block of the character set you wish to add and edit the `lang/unicodes.json` by following the existing template. Remove any default character set you do not need. The `name` property is only for reference. The `start` and `end` properties are the start and end address in Base 16 of the Unicode character range to be imported. Specify the font to use with the `font` property (this is the `name` property in the `lang/fonts.json` file). Leave an empty array if you do not use this file.
 

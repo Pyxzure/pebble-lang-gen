@@ -3,53 +3,131 @@
         "name": "GoNotoKurrent",
         "variants":
         {
-            "001": 
+            "001":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 12,
-                "offset": 2
+                "offset": 2,
+                "bold": false
             },
-            "002": 
+            "002":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 12,
-                "offset": 2
+                "offset": 2,
+                "bold": true
             },
-            "003": 
+            "003":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 14,
-                "offset": 4
+                "offset": 4,
+                "bold": false
             },
-            "004": 
+            "004":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 14,
-                "offset": 4
+                "offset": 4,
+                "bold": true
             },
-            "005": 
+            "005":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 17,
-                "offset": 7
+                "offset": 7,
+                "bold": false
             },
-            "006": 
+            "006":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 17,
-                "offset": 7
+                "offset": 7,
+                "bold": true
             },
-            "007": 
+            "007":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 20,
-                "offset": 8
+                "offset": 8,
+                "bold": false
             },
-            "008": 
+            "008":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
                 "height": 20,
-                "offset": 8
+                "offset": 8,
+                "bold": true
+            },
+            "009":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 14,
+                "offset": 4,
+                "bold": false
+            },
+            "010":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 21,
+                "offset": 9,
+                "bold": true
+            },
+            "011":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 24,
+                "offset": 10,
+                "bold": false
+            },
+            "012":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 24,
+                "offset": 10,
+                "bold": true
+            },
+            "013":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 30,
+                "offset": 12,
+                "bold": true
+            },
+            "014":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 30,
+                "offset": 12,
+                "bold": false
+            },
+            "015":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 30,
+                "offset": 12,
+                "bold": true
+            },
+            "016":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 16,
+                "offset": 5,
+                "bold": false
+            },
+            "017":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 35,
+                "offset": 14,
+                "bold": true
+            },
+            "018":
+            {
+                "ttf": "GoNotoKurrent-Regular.ttf",
+                "height": 20,
+                "offset": 8,
+                "bold": true
             }
         }
     }
