@@ -19,7 +19,7 @@ USE_LEGACY = False
 
 os.makedirs(BUILD_DIR, exist_ok=True)
 
-def build_font_objects(json_paths, font_height, font_offset, pbff_type) -> List[Font]:
+def build_font_objects(json_paths, font_height, font_offset, ttf_fauxbold, pbff_type) -> List[Font]:
     font_objects = []
     
     for json_path in json_paths:
@@ -30,14 +30,20 @@ def build_font_objects(json_paths, font_height, font_offset, pbff_type) -> List[
             font_type = FontType.TTF
             ttf_path = str(TTFS_DIR / font_or_pbff_name)
         elif '.pbff' in font_or_pbff_name:
+            if pbff_type is None:
+                continue
             font_type = FontType.PBFF
             pbff_path = str(PBFFS_DIR.joinpath(font_or_pbff_name.replace(".pbff", "")).joinpath(f"{pbff_type}.pbff"))
+        else:
+            continue
 
         max_glyphs = 32640 if USE_EXTENDED else 256
         font_obj = Font(font_type, ttf_path, pbff_path, font_height, max_glyphs, USE_LEGACY)
         font_obj.set_codepoint_list(json_path)
         if font_offset is not None:
             font_obj.set_heightoffset(font_offset)
+        if font_type == FontType.TTF:
+            font_obj.set_fauxbold(ttf_fauxbold)
         
         font_objects.append(font_obj)
     
@@ -183,9 +189,9 @@ for spec in unicode_specs:
     ttf_name = spec.get('ttf')
     pbff_name = spec.get('pbff')
     if ttf_name is None and pbff_name is None:
-        raise KeyError(f'unicode spec with name {spec.get('name')} must have "font" or "pbff" specified')
+        raise KeyError(f'unicode spec with name {spec.get("name")} must have "font" or "pbff" specified')
     if ttf_name != None and pbff_name != None:
-        raise KeyError(f'unicode spec with name {spec.get('name')} must have either "font" or "pbff", not both')
+        raise KeyError(f'unicode spec with name {spec.get("name")} must have either "font" or "pbff", not both')
 
     for cp in range(start_cp, end_cp + 1):
         if ttf_name:
@@ -242,15 +248,25 @@ if len(json_paths) < 1:
 print("Building resource")
 
 builds = {
-    # pebble font resource key: (ttf font height, ttf height offset, pbff file name)
-    '001': (12, 2, '14'),
-    '002': (12, 2, '14_bold'),
-    '003': (14, 4, '18'),
-    '004': (14, 4, '18_bold'),
-    '005': (17, 7, '24'),
-    '006': (17, 7, '24_bold'),
-    '007': (20, 8, '28'),
-    '008': (20, 8, '28_bold'),
+    # pebble font resource key: (ttf font height, ttf height offset, ttf faux bold, pbff file name)
+    '001': (12, 2, False, '14'),
+    '002': (12, 2, True, '14_bold'),
+    '003': (14, 4, False, '18'),
+    '004': (14, 4, True, '18_bold'),
+    '005': (17, 7, False, '24'),
+    '006': (17, 7, True, '24_bold'),
+    '007': (20, 8, False, '28'),
+    '008': (20, 8, True, '28_bold'),
+    '009': (14, 4, False, None),
+    '010': (21, 9, True, None),
+    '011': (24, 10, False, None),
+    '012': (24, 10, True, None),
+    '013': (30, 12, True, None),
+    '014': (30, 12, False, None),
+    '015': (30, 12, True, None),
+    '016': (16, 5, False, None),
+    '017': (35, 14, True, None),
+    '018': (20, 8, True, None),
 }
 
 for key, values in builds.items():
@@ -258,10 +274,13 @@ for key, values in builds.items():
         json_paths,
         font_height=values[0],
         font_offset=values[1],
-        pbff_type=values[2],
+        ttf_fauxbold=values[2],
+        pbff_type=values[3],
     )
     if not fonts:
-        raise Exception("Failed to create any Font objects. Exiting.")
+        with open(BUILD_DIR / key, 'wb') as f:
+            pass
+        continue
         
     merged_font = merge_fonts(fonts)
     if merged_font is None:
@@ -270,10 +289,6 @@ for key, values in builds.items():
     with open(BUILD_DIR / key, 'wb') as f:
         f.write(merged_font.bitstring())
 
-for file_name in [str(i).zfill(3) for i in range(9, 19)]:
-    with open(BUILD_DIR / file_name, 'w') as f:
-        pass  # Empty file
-
 shutil.copy(TRANS_DIR / '000', BUILD_DIR / '000')
 
 print("Packing resources")
@@ -281,8 +296,34 @@ print("Packing resources")
 # Pack all files
 pack = ResourcePack()
 for f in [str(i).zfill(3) for i in range(0, 19)]:
-    pack.add_resource(open(BUILD_DIR / f, 'rb').read())
+    with open(BUILD_DIR / f, 'rb') as resource_file:
+        content = resource_file.read()
+    if f == '018' and len(content) != 0 and content in pack.contents:   # workaround; last resource can't be duplicate
+        pack.contents.append(content)
+        pack.table.append(len(pack.contents) - 1)
+    else:
+        pack.add_resource(content)
 with open(BUILD_DIR / OUTPUT_FILE, 'wb') as pack_file:
     pack.serialize(pack_file)
 
 print("Completed. Output: " + str(BUILD_DIR / OUTPUT_FILE))
+
+# Note
+# 001	GOTHIC_14_EXTENDED
+# 002	GOTHIC_14_BOLD_EXTENDED
+# 003	GOTHIC_18_EXTENDED
+# 004	GOTHIC_18_BOLD_EXTENDED
+# 005	GOTHIC_24_EXTENDED
+# 006	GOTHIC_24_BOLD_EXTENDED
+# 007	GOTHIC_28_EXTENDED
+# 008	GOTHIC_28_BOLD_EXTENDED
+# 009	BITHAM_18_LIGHT_SUBSET_EXTENDED
+# 010	BITHAM_30_BLACK_EXTENDED
+# 011	BITHAM_34_LIGHT_SUBSET_EXTENDED
+# 012	BITHAM_34_MEDIUM_NUMBERS_EXTENDED
+# 013	BITHAM_42_BOLD_EXTENDED
+# 014	BITHAM_42_LIGHT_EXTENDED
+# 015	BITHAM_42_MEDIUM_NUMBERS_EXTENDED
+# 016	ROBOTO_CONDENSED_21_EXTENDED
+# 017	ROBOTO_BOLD_SUBSET_49_EXTENDED
+# 018	DROID_SERIF_28_BOLD_EXTENDED
