@@ -20,18 +20,20 @@ variants | height + offset
 006|24
 007|28
 008|28
-009|18
-010|30
-011|34
-012|34
-013|42
-014|42
+009|36
+010|36
+011|18
+012|30
+013|34
+014|34
 015|42
-016|21
-017|49
-018|28
+016|42
+017|42
+018|21
+019|49
+020|28
 
-Unused variants (typically 009~018) can be deleted to reduce final pack size.
+Unused variants (typically 011~020) can be deleted to reduce final pack size.
 
 1.1 (Easy way) If the character set you want to add is small, locate the Unicode block of the character set you wish to add and edit the `lang/unicodes.json` by following the existing template. Remove any default character set you do not need. The `name` property is only for reference. The `start` and `end` properties are the start and end address in Base 16 of the Unicode character range to be imported. Specify the font to use with the `font` property (this is the `name` property in the `lang/fonts.json` file). Leave an empty array if you do not use this file.
 

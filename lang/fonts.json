@@ -6,127 +6,71 @@
             "001":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 12,
-                "offset": 2,
+                "height": 14,
+                "offset": 0,
                 "bold": false
             },
             "002":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 12,
-                "offset": 2,
+                "height": 14,
+                "offset": 0,
                 "bold": true
             },
             "003":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 14,
-                "offset": 4,
+                "height": 18,
+                "offset": 0,
                 "bold": false
             },
             "004":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 14,
-                "offset": 4,
+                "height": 18,
+                "offset": 0,
                 "bold": true
             },
             "005":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 17,
-                "offset": 7,
+                "height": 24,
+                "offset": 0,
                 "bold": false
             },
             "006":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 17,
-                "offset": 7,
+                "height": 24,
+                "offset": 0,
                 "bold": true
             },
             "007":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 20,
-                "offset": 8,
+                "height": 28,
+                "offset": 0,
                 "bold": false
             },
             "008":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 20,
-                "offset": 8,
+                "height": 28,
+                "offset": 0,
                 "bold": true
             },
             "009":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 14,
-                "offset": 4,
+                "height": 36,
+                "offset": 0,
                 "bold": false
             },
             "010":
             {
                 "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 21,
-                "offset": 9,
-                "bold": true
-            },
-            "011":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 24,
-                "offset": 10,
-                "bold": false
-            },
-            "012":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 24,
-                "offset": 10,
-                "bold": true
-            },
-            "013":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 30,
-                "offset": 12,
-                "bold": true
-            },
-            "014":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 30,
-                "offset": 12,
-                "bold": false
-            },
-            "015":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 30,
-                "offset": 12,
-                "bold": true
-            },
-            "016":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 16,
-                "offset": 5,
-                "bold": false
-            },
-            "017":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 35,
-                "offset": 14,
-                "bold": true
-            },
-            "018":
-            {
-                "ttf": "GoNotoKurrent-Regular.ttf",
-                "height": 20,
-                "offset": 8,
+                "height": 36,
+                "offset": 0,
                 "bold": true
             }
         }

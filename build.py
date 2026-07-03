@@ -271,16 +271,18 @@ builds = {
     '006': (24, '24_bold'),
     '007': (28, '28'),
     '008': (28, '28_bold'),
-    '009': (18, None),
-    '010': (30, None),
-    '011': (34, None),
-    '012': (34, None),
-    '013': (42, None),
-    '014': (42, None),
+    '009': (36, None),
+    '010': (36, None),
+    '011': (18, None),
+    '012': (30, None),
+    '013': (34, None),
+    '014': (34, None),
     '015': (42, None),
-    '016': (21, None),
-    '017': (49, None),
-    '018': (28, None),
+    '016': (42, None),
+    '017': (42, None),
+    '018': (21, None),
+    '019': (49, None),
+    '020': (28, None),
 }
 
 for key, values in builds.items():
@@ -303,7 +305,7 @@ for key, values in builds.items():
     with open(BUILD_DIR / key, 'wb') as f:
         f.write(merged_font.bitstring())
 
-for file_name in [str(i).zfill(3) for i in range(1, 19)]:
+for file_name in [str(i).zfill(3) for i in range(1, 21)]:
     output_path = BUILD_DIR / file_name
     if not output_path.exists():
         with open(output_path, 'wb') as f:
@@ -315,10 +317,10 @@ print("Packing resources")
 
 # Pack all files
 pack = ResourcePack()
-for f in [str(i).zfill(3) for i in range(0, 19)]:
+for f in [str(i).zfill(3) for i in range(0, 21)]:
     with open(BUILD_DIR / f, 'rb') as resource_file:
         content = resource_file.read()
-    if f == '018' and len(content) != 0 and content in pack.contents:   # workaround; last resource must not be duplicate
+    if f == '020' and len(content) != 0 and content in pack.contents:   # workaround; last resource must not be duplicate
         pack.contents.append(content)
         pack.table.append(len(pack.contents) - 1)
     else:
@@ -337,13 +339,15 @@ print("Completed. Output: " + str(BUILD_DIR / OUTPUT_FILE))
 # 006	GOTHIC_24_BOLD_EXTENDED
 # 007	GOTHIC_28_EXTENDED
 # 008	GOTHIC_28_BOLD_EXTENDED
-# 009	BITHAM_18_LIGHT_SUBSET_EXTENDED
-# 010	BITHAM_30_BLACK_EXTENDED
-# 011	BITHAM_34_LIGHT_SUBSET_EXTENDED
-# 012	BITHAM_34_MEDIUM_NUMBERS_EXTENDED
-# 013	BITHAM_42_BOLD_EXTENDED
-# 014	BITHAM_42_LIGHT_EXTENDED
-# 015	BITHAM_42_MEDIUM_NUMBERS_EXTENDED
-# 016	ROBOTO_CONDENSED_21_EXTENDED
-# 017	ROBOTO_BOLD_SUBSET_49_EXTENDED
-# 018	DROID_SERIF_28_BOLD_EXTENDED
+# 009	GOTHIC_36_EXTENDED
+# 010	GOTHIC_36_BOLD_EXTENDED
+# 011	BITHAM_18_LIGHT_SUBSET_EXTENDED
+# 012	BITHAM_30_BLACK_EXTENDED
+# 013	BITHAM_34_LIGHT_SUBSET_EXTENDED
+# 014	BITHAM_34_MEDIUM_NUMBERS_EXTENDED
+# 015	BITHAM_42_BOLD_EXTENDED
+# 016	BITHAM_42_LIGHT_EXTENDED
+# 017	BITHAM_42_MEDIUM_NUMBERS_EXTENDED
+# 018	ROBOTO_CONDENSED_21_EXTENDED
+# 019	ROBOTO_BOLD_SUBSET_49_EXTENDED
+# 020	DROID_SERIF_28_BOLD_EXTENDED
